@@ -1,16 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package mortalkombatbversion;
+package mortalkombatbversion.Characters;
 
+import mortalkombatbversion.Characters.EnemyFabricInterface;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import mortalkombatbversion.Player;
 
-/**
- *
- * @author Мария
- */
 public class EnemyFabric {
 
     public Player create(int i, int j) {
