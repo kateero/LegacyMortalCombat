@@ -1,4 +1,4 @@
-package mortalkombatbversion.Characters;
+package Characters;
 
 public class Player {
 
@@ -16,7 +16,7 @@ public class Player {
         this.maxhealth = health;
         this.baseDamage = damage;
     }
-
+    
     public void addLevel() {
         this.level++;
     }

@@ -1,4 +1,4 @@
-package mortalkombatbversion.Characters;
+package Characters;
 
 public class SubZero extends Enemy {
 

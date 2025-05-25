@@ -1,11 +1,11 @@
 package GUI;
 
-import mortalkombatbversion.Characters.Player;
+import Characters.Player;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mortalkombatbversion.Game;
-import mortalkombatbversion.Characters.Human;
+import Characters.Human;
 import mortalkombatbversion.Items;
 
 public class JFrames extends javax.swing.JFrame {

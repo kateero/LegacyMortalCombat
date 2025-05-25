@@ -1,14 +1,14 @@
-package mortalkombatbversion.Characters;
+package Characters;
 
-public class Human extends Player {
-
-    private int points;
+public class Human extends Player{
+    
+     private int points;
     private int experience;
     private int win;
     private int nextexperience;
 
-    public Human(int level, int health, int damage) {
-        super(level, health, damage);
+    public Human() {
+        super(0, 80, 16);
         this.points = 0;
         this.experience = 0;
         this.nextexperience = 40;
@@ -62,10 +62,7 @@ public class Human extends Player {
         if (canLevelUp()) {
             addLevel();
             experience -= nextexperience;
-            nextexperience = (int)(nextexperience * 1.5); // Увеличиваем планку
-            addMaxHealth(20); // +20 к max HP
-            changeHealth(getMaxHealth()); // Полное исцеление
-            addDamage(5); // +5 к урону
+            nextexperience = (int)(nextexperience * 1.5);
         }
     }
 

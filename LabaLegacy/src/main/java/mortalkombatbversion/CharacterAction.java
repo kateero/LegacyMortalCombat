@@ -4,13 +4,13 @@
  */
 package mortalkombatbversion;
 
-import mortalkombatbversion.Characters.Player;
-import mortalkombatbversion.Characters.LiuKang;
-import mortalkombatbversion.Characters.ShaoKahn;
-import mortalkombatbversion.Characters.SonyaBlade;
-import mortalkombatbversion.Characters.SubZero;
-import mortalkombatbversion.Characters.Baraka;
-import mortalkombatbversion.Characters.EnemyFabric;
+import Characters.Player;
+import Characters.LiuKang;
+import Characters.ShaoKahn;
+import Characters.SonyaBlade;
+import Characters.SubZero;
+import Characters.Baraka;
+import Characters.EnemyFabric;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;

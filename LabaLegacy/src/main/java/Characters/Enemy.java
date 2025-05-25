@@ -1,4 +1,4 @@
-package mortalkombatbversion.Characters;
+package Characters;
 
 public class Enemy extends Player {
 
@@ -7,7 +7,9 @@ public class Enemy extends Player {
     private int patternStep = 0;
 
     public Enemy(int level, int health, int damage, EnemyType type) {
-        super(level, health, damage);
+        super(level,
+                (int) (health * (1 + 0.3 * (level - 1))),
+                (int) (damage * (1 + 0.2 * (level - 1))));
         this.type = type;
         this.currentPattern = this.generateBehaviorPattern();
     }
@@ -33,7 +35,7 @@ public class Enemy extends Player {
                     return BehaviorPattern.MAGE_ATTACKS;
                 } else {
                     return BehaviorPattern.FOUR_ATTACKS;
-                }                
+                }
 
             case FIGHTER:
                 if (rand < 25) {

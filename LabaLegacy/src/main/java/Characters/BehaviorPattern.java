@@ -1,4 +1,4 @@
-package mortalkombatbversion.Characters;
+package Characters;
 
 import java.util.List;
 import java.util.Random;
