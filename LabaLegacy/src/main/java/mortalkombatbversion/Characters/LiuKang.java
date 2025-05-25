@@ -1,15 +1,13 @@
 package mortalkombatbversion.Characters;
 
-import mortalkombatbversion.Player;
+public class LiuKang extends Enemy {
 
-public class LiuKang extends Player{
-    
-    public LiuKang(int level, int health, int  damage, int attack){
-        super (level, health, damage, attack);
+    public LiuKang(int level) {
+        super(level, 70, 20, EnemyType.FIGHTER);
     }
-    
+
     @Override
-    public String getName(){
+    public String getName() {
         return "Liu Kang";
     }
 }

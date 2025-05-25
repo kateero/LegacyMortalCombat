@@ -1,16 +1,14 @@
 package mortalkombatbversion.Characters;
 
-import mortalkombatbversion.Player;
+public class Baraka extends Enemy {
 
-public class Baraka extends Player{
-    
-    public Baraka(int level, int health, int  damage, int attack){
-        super (level, health, damage, attack);
+    public Baraka(int level) {
+        super(level, 100, 12, EnemyType.TANK);
     }
-    
+
     @Override
-    public String getName(){
+    public String getName() {
         return "Baraka";
     }
-    
+
 }

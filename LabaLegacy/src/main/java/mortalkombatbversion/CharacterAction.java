@@ -4,6 +4,7 @@
  */
 package mortalkombatbversion;
 
+import mortalkombatbversion.Characters.Player;
 import mortalkombatbversion.Characters.LiuKang;
 import mortalkombatbversion.Characters.ShaoKahn;
 import mortalkombatbversion.Characters.SonyaBlade;

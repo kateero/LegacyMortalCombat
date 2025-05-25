@@ -14,7 +14,7 @@ import mortalkombatbversion.ChangeTexts;
 import mortalkombatbversion.CharacterAction;
 import mortalkombatbversion.Fight;
 import mortalkombatbversion.Human;
-import mortalkombatbversion.Player;
+import mortalkombatbversion.Characters.Player;
 import mortalkombatbversion.Result;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;

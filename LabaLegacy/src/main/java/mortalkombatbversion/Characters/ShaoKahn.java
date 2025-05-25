@@ -1,23 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package mortalkombatbversion.Characters;
 
-import mortalkombatbversion.Player;
+public class ShaoKahn extends Enemy {
 
-/**
- *
- * @author Мария
- */
-public class ShaoKahn extends Player{
-    
-    public ShaoKahn(int level, int health, int  damage, int attack){
-        super (level, health, damage, attack);
+    //надо сделать боссом
+    public ShaoKahn(int level) {
+        super(level, 100, 30, EnemyType.MAGE);
     }
-    
+
     @Override
-    public String getName(){
+    public String getName() {
         return "Shao Kahn";
     }
 }
+/*
+ if(i==0){
+            enemy = new ShaoKahn(3, 100, 30, 1);
+        }
+        else{
+           enemy = new ShaoKahn(3, 145, 44, 1); 
+        }
+*/

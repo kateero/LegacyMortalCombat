@@ -5,6 +5,7 @@
 package mortalkombatbversion;
 
 //ADD IMAGE!!!
+import mortalkombatbversion.Characters.Player;
 import mortalkombatbversion.Characters.ShaoKahn;
 import mortalkombatbversion.Characters.EnemyFabric;
 import java.util.ArrayList;

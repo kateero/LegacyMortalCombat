@@ -1,4 +1,4 @@
-package mortalkombatbversion;
+package mortalkombatbversion.Characters;
 
 public class Player {
 
@@ -6,38 +6,32 @@ public class Player {
     private int health;
     private int maxhealth;
     private int damage;
-    private int attack;
 
-    public Player(int level, int health, int damage, int attack) {
+    public Player(int level, int health, int  damage) {
         this.level = level;
         this.health = health;
-        this.damage = damage;
-        this.attack = attack;
         this.maxhealth = health;
+        this.damage = damage;
     }
 
     public void setLevel() {
         this.level++;
     }
 
-    public void setHealth(int h) {
-        this.health += h;
+    public void setHealth(int addHealth) {
+        this.health += addHealth;
     }
 
-    public void setNewHealth(int h) {
-        this.health = h;
+    public void setNewHealth(int newHealth) {
+        this.health = newHealth;
     }
 
-    public void setDamage(int d) {
-        this.damage += d;
+    public void setDamage(int addDamage) {
+        this.damage += addDamage;
     }
 
-    public void setAttack(int a) {
-        this.attack = a;
-    }
-
-    public void setMaxHealth(int h) {
-        this.maxhealth += h;
+    public void setMaxHealth(int maxhealth) {
+        this.maxhealth += maxhealth;
     }
 
     public int getLevel() {
@@ -50,10 +44,6 @@ public class Player {
 
     public int getDamage() {
         return this.damage;
-    }
-
-    public int getAttack() {
-        return this.attack;
     }
 
     public int getMaxHealth() {
