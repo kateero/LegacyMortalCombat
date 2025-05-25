@@ -27,7 +27,13 @@ public class Enemy extends Player {
                 }
 
             case MAGE:
-                return (rand < 50) ? BehaviorPattern.getRandomAttackDefend() : BehaviorPattern.FOUR_ATTACKS;
+                if (rand < 30) {
+                    return BehaviorPattern.getRandomAttackDefend();
+                } else if (rand < 70) {
+                    return BehaviorPattern.MAGE_ATTACKS;
+                } else {
+                    return BehaviorPattern.FOUR_ATTACKS;
+                }                
 
             case FIGHTER:
                 if (rand < 25) {

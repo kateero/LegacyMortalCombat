@@ -8,7 +8,8 @@ public enum BehaviorPattern {
     ATTACK_DEFEND(List.of(Action.ATTACK, Action.DEFEND)),
     ATTACK_ATTACK_DEFEND(List.of(Action.ATTACK, Action.ATTACK, Action.DEFEND)),
     DEFEND_ATTACK_DEFEND(List.of(Action.DEFEND, Action.ATTACK, Action.DEFEND)),
-    FOUR_ATTACKS(List.of(Action.ATTACK, Action.ATTACK, Action.ATTACK, Action.ATTACK));
+    FOUR_ATTACKS(List.of(Action.ATTACK, Action.ATTACK, Action.ATTACK, Action.ATTACK)),
+    MAGE_ATTACKS(List.of(Action.ATTACK, Action.WEAKEN, Action.ATTACK));
 
     private final List<Action> actions;
 
