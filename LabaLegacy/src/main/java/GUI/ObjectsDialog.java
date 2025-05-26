@@ -119,19 +119,7 @@ public class ObjectsDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_bigPoisonRBActionPerformed
 
     private void useButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useButtonActionPerformed
-        if(smallPoisonRB.isSelected()){
-            nameButton="jRadioButton1";
-        }
-        if(bigPoisonRB.isSelected()){
-            nameButton="jRadioButton2";
-        }
-        if(rebirthRB.isSelected()){
-            nameButton="jRadioButton3";
-        }
-        game.action.UseItem(human, items, nameButton, jDialog6, jDialog5);
-        game.action.HP(human, jProgressBar1);
-        jLabel12.setText(human.getHealth() + "/" + human.getMaxHealth());
-        game.change.BagText(items, smallPoisonRB, bigPoisonRB, rebirthRB);
+
     }//GEN-LAST:event_useButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

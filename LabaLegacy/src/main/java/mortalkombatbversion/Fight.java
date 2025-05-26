@@ -21,7 +21,7 @@ public class Fight {
         this.logLabel = logLabel;
     }
 
-    public void processRound(Action playerAction) {
+    public void playerMove(Action playerAction) {
 
         // Ход игрока
         if (stunStatus == 1) {
@@ -33,6 +33,14 @@ public class Fight {
             resolveActions(playerAction, enemyReaction, true);
         }
 
+        if (enemy.getHealth() <= 0) {
+            handleVictory();
+        } else if (player.getHealth() <= 0) {
+            handleDefeat();
+        }
+    }
+
+    public void computerMove(Action playerReaction) {
         //Ход компьютера
         if (enemy.getHealth() > 0) {
             if (stunStatus == 2) {
@@ -41,12 +49,10 @@ public class Fight {
             } else {
                 enemy.updateDebuff();
                 Action enemyAction = enemy.getNextAction();
-                Action playerReaction = player.chooseAction(enemy);
                 resolveActions(enemyAction, playerReaction, false);
             }
         }
 
-        // Проверка победы
         if (enemy.getHealth() <= 0) {
             handleVictory();
         } else if (player.getHealth() <= 0) {
@@ -166,4 +172,5 @@ public class Fight {
     public int getWinsForNextLevel() {
         return getWinsForLevel(currentLevel);
     }
+
 }

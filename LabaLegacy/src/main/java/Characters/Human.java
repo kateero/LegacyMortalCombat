@@ -2,7 +2,7 @@ package Characters;
 
 public class Human extends Player{
     
-     private int points;
+    private int points;
     private int experience;
     private int win;
     private int nextexperience;

@@ -10,10 +10,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import mortalkombatbversion.ChangeTexts;
-import mortalkombatbversion.CharacterAction;
-import mortalkombatbversion.Fight;
-import mortalkombatbversion.Human;
 import Characters.Player;
 import mortalkombatbversion.Result;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -26,7 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class Game {
 
-    CharacterAction action = new CharacterAction();
+ /*   CharacterAction action = new CharacterAction();
     ChangeTexts change = new ChangeTexts();
     Fight fight = new Fight();
     private ArrayList<Result> results = new ArrayList<>();
@@ -94,5 +90,5 @@ public class Game {
                 model.setValueAt(results.get(i).getPoints(), i, 1);
             }
         }
-    }
+    }*/
 }

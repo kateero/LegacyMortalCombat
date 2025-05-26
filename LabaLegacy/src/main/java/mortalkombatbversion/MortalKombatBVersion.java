@@ -1,10 +1,13 @@
 package mortalkombatbversion;
 
+import GUI.galaFrame;
+
 public class MortalKombatBVersion {
 
     public static void main(String[] args) {
-        
-        JFrames app = new JFrames();
-        app.setVisible(true);
+        galaFrame gf = new galaFrame();
+        mainIdea m = new mainIdea(1, gf);
+        m.startGame();
+        gf.setVisible(true);
     }
 }

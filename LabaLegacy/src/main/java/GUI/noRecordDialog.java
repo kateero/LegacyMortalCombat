@@ -83,13 +83,7 @@ public class noRecordDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void endGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endGameButtonActionPerformed
-        try {
-            game.EndGameTop(human, nameValue, jTable1);
-        } catch (IOException ex) {
-            Logger.getLogger(JFrames.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        jDialog2.dispose();
-        nameValue.setText("");
+     
     }//GEN-LAST:event_endGameButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

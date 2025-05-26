@@ -1,7 +1,7 @@
 package Characters;
 
 public class EnemyFabric {
-    public Player createEnemy(EnemyType type, int level) {
+    public Enemy createEnemy(EnemyType type, int level) {
         switch (type) {
             case TANK:    return new Baraka(level);
             case MAGE:    return new SubZero(level);
