@@ -7,6 +7,7 @@ public class loseDialog extends javax.swing.JDialog {
     public loseDialog(JFrame parent) {
         super(parent, "поражение", true);
         initComponents();
+        setLocationRelativeTo(parent);
     }
 
     @SuppressWarnings("unchecked")

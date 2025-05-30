@@ -101,7 +101,7 @@ public class startFrame extends javax.swing.JFrame {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         galaFrame gf = new galaFrame();
-        mainIdea m = new mainIdea(1, gf);
+        mainIdea m = new mainIdea(2, gf);
         m.startGame();
         this.dispose();
         gf.setLocationRelativeTo(null);

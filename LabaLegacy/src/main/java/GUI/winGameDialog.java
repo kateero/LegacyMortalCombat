@@ -1,11 +1,14 @@
 package GUI;
 
+import javax.swing.JFrame;
+
 public class winGameDialog extends javax.swing.JDialog {
 
-    public winGameDialog() {
+    public winGameDialog(JFrame parent) {
+        super(parent, true);
         initComponents();
+        setLocationRelativeTo(parent);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -29,11 +32,6 @@ public class winGameDialog extends javax.swing.JDialog {
         nameValue.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         nameValue.setForeground(new java.awt.Color(0, 0, 0));
         nameValue.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        nameValue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameValueActionPerformed(evt);
-            }
-        });
 
         enterNameLabel.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         enterNameLabel.setForeground(new java.awt.Color(51, 51, 51));
@@ -96,12 +94,11 @@ public class winGameDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nameValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameValueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameValueActionPerformed
-
     private void endGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endGameButtonActionPerformed
-
+        this.dispose();
+        startFrame start = new startFrame();
+        start.setLocationRelativeTo(null);
+        start.setVisible(true);
     }//GEN-LAST:event_endGameButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

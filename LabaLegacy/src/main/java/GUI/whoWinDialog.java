@@ -1,11 +1,18 @@
 package GUI;
 
-public class whoWinDialog extends javax.swing.JFrame {
+import javax.swing.JFrame;
 
-    public whoWinDialog() {
+public class whoWinDialog extends javax.swing.JDialog {
+
+    public whoWinDialog(JFrame parent) {
+        super(parent, true); // Делаем диалог модальным
         initComponents();
+        setLocationRelativeTo(parent);
+        
+        nextButton.addActionListener(evt -> {
+            dispose(); // Закрываем диалог при нажатии кнопки
+        });
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -15,26 +22,21 @@ public class whoWinDialog extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         nextButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel3.setBackground(new java.awt.Color(179, 226, 217));
 
         jLabel18.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel18.setFont(new java.awt.Font("Comic Sans MS", 1, 42)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("Georgia", 1, 22)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(204, 0, 0));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("jLabel18");
+        jLabel18.setText("Враг повержен!");
         jLabel18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         nextButton.setBackground(new java.awt.Color(114, 218, 142));
-        nextButton.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
+        nextButton.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
         nextButton.setForeground(new java.awt.Color(0, 0, 0));
         nextButton.setText("Дальше");
-        nextButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nextButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -43,48 +45,36 @@ public class whoWinDialog extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(84, 84, 84)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(138, 138, 138)
+                        .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
+                .addContainerGap(83, Short.MAX_VALUE)
+                .addComponent(jLabel18)
+                .addGap(18, 18, 18)
+                .addComponent(nextButton)
+                .addGap(82, 82, 82))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-
-    }//GEN-LAST:event_nextButtonActionPerformed
-
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel18;

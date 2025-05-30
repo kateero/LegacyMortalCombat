@@ -63,6 +63,7 @@ public class Human extends Player{
             addLevel();
             experience -= nextexperience;
             nextexperience = (int)(nextexperience * 1.5);
+            // Характеристики будут улучшаться через диалог
         }
     }
 

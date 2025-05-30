@@ -1,4 +1,3 @@
-
 package mortalkombatbversion;
 
 import Characters.Enemy;
@@ -7,6 +6,9 @@ import Characters.EnemyType;
 import Characters.Human;
 import GUI.galaFrame;
 import GUI.loseDialog;
+import GUI.chooseImproveDialog;
+import GUI.whoWinDialog;
+import GUI.winGameDialog;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,13 +42,19 @@ public class mainIdea {
     }
 
     public void startGame() {
-        currentLocation = 0;
-        gameOver = false;
+        resetGameState();
         playNextLocation();
     }
 
-    private void playNextLocation() {
+    private void resetGameState() {
+        currentLocation = 0;
+        gameOver = false;
+        currentEnemyIndex = 0;
+        currentEnemies.clear();
+        human = new Human(); // Создаем нового игрока при новой игре
+    }
 
+    private void playNextLocation() {
         if (currentLocation >= locationQuantity || gameOver) {
             endGame();
             return;
@@ -62,6 +70,15 @@ public class mainIdea {
     private void startNextFight() {
         if (currentEnemyIndex >= currentEnemies.size()) {
             currentLocation++;
+            if (currentLocation >= locationQuantity) {
+                endGame();
+                return;
+            }
+            human.levelUp(); 
+            SwingUtilities.invokeLater(() -> {
+                chooseImproveDialog improveDialog = new chooseImproveDialog(galaFrame, human);
+                improveDialog.setVisible(true);
+            });
             playNextLocation();
             return;
         }
@@ -71,29 +88,39 @@ public class mainIdea {
         galaFrame.setFight(fight);
         galaFrame.initilaize();
 
-       fight.setBattleEndListener(new Fight.BattleEndListener() {
-        @Override
-        public void onBattleEnd(boolean playerWon) {
-            SwingUtilities.invokeLater(() -> {
+        fight.setBattleEndListener(new Fight.BattleEndListener() {
+            @Override
+            public void onBattleEnd(boolean playerWon) {
                 if (playerWon) {
                     currentEnemyIndex++;
-                    if (currentEnemyIndex < currentEnemies.size()) {
-                        // Немедленный переход к следующему врачу
-                        startNextFight();
-                    } else {
-                        // Все враги побеждены, переход к новой локации
-                        currentLocation++;
-                        playNextLocation();
-                    }
+                    SwingUtilities.invokeLater(() -> {
+                        whoWinDialog winDialog = new whoWinDialog(galaFrame);
+                        winDialog.setVisible(true);
+                        if (currentEnemyIndex < currentEnemies.size()) {
+                            startNextFight();
+                        } else {
+                            currentLocation++;
+                            if (currentLocation >= locationQuantity) {
+                                endGame();
+                            } else {
+                                human.levelUp();
+                                chooseImproveDialog improveDialog = new chooseImproveDialog(galaFrame, human);
+                                improveDialog.setVisible(true);
+                                playNextLocation();
+                            }
+                        }
+                    });
                 } else {
                     gameOver = true;
-                    Window parent = SwingUtilities.getWindowAncestor(null);
-                    loseDialog dialog = new loseDialog((JFrame) parent);
-                    dialog.setVisible(true);
+                    SwingUtilities.invokeLater(() -> {
+                        loseDialog dialog = new loseDialog(galaFrame);
+                        galaFrame.setVisible(false);
+                        dialog.setVisible(true);
+                        resetGameState(); // Сбрасываем состояние игры после поражения
+                    });
                 }
-            });
-        }
-    });
+            }
+        });
     }
 
     private ArrayList<Enemy> generateEnemies(int count) {
@@ -109,10 +136,13 @@ public class mainIdea {
     }
 
     private void endGame() {
-        if (gameOver) {
-
-        } else {
-            // galaFrame.showVictoryDialog("Поздравляем! Вы прошли все локации!");
+        if (!gameOver) {
+            // Победа в игре
+            SwingUtilities.invokeLater(() -> {
+                galaFrame.setVisible(false);
+                winGameDialog dialog = new winGameDialog(galaFrame);
+                dialog.setVisible(true);
+            });
         }
     }
 

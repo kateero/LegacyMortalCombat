@@ -120,14 +120,11 @@ public class Fight {
         int expGain = calculateExperience();
         player.addExperience(expGain);
         player.addPoints(calculatePoints());
-
-        logLabel.setText(player.getName() + " побеждает! +" + expGain + " опыта");
         
         if (battleEndListener != null) {
             battleEndListener.onBattleEnd(true);
         }
-
-        // Проверка перехода на новый уровень
+        
         if (playerWins >= getWinsForLevel(currentLevel)) {
             currentLevel++;
             player.levelUp();
@@ -136,19 +133,16 @@ public class Fight {
     }
 
     private void handleDefeat() {
-        logLabel.setText("Вы проиграли! Игра окончена.");
         if (battleEndListener != null) {
             battleEndListener.onBattleEnd(false);
         }
     }
 
     private int calculateExperience() {
-        // Опыт зависит от уровня врага и полученного урона
         return 10 + currentLevel * 5;
     }
 
     private int calculatePoints() {
-        // Очки зависят от оставшегося здоровья
         return (int) (player.getHealth() / (double) player.getMaxHealth() * 100);
     }
 

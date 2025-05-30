@@ -1,9 +1,41 @@
 package GUI;
 
-public class chooseImproveDialog extends javax.swing.JFrame {
+import Characters.Human;
+import javax.swing.JFrame;
 
-    public chooseImproveDialog() {
+public class chooseImproveDialog extends javax.swing.JFrame {
+    private Human human;
+    private galaFrame mainFrame;
+    private static final String[] IMPROVEMENTS = {
+        "Здоровье (+10)",
+        "Урон (+5)",
+    };
+
+    public chooseImproveDialog(galaFrame parent, Human human) {
         initComponents();
+        this.human = human;
+        this.mainFrame = parent;
+        setLocationRelativeTo(parent);
+        improveComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(IMPROVEMENTS));
+        
+        okButton.addActionListener(evt -> {
+            applyImprovement(improveComboBox.getSelectedIndex());
+            mainFrame.refreshAfterHit();
+            this.dispose();
+        });
+    }
+
+    private void applyImprovement(int selectedIndex) {
+        switch (selectedIndex) {
+            case 0 -> {
+                human.addMaxHealth(10);
+                human.setNewHealth(human.getMaxHealth());
+            }
+            case 1 -> {
+                human.addDamage(5);
+                human.setNewHealth(human.getMaxHealth());
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
