@@ -1,5 +1,6 @@
-
 package GUI;
+
+import mortalkombatbversion.mainIdea;
 
 public class startFrame extends javax.swing.JFrame {
 
@@ -55,16 +56,16 @@ public class startFrame extends javax.swing.JFrame {
             .addGroup(startPanelLayout.createSequentialGroup()
                 .addGroup(startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(startPanelLayout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addComponent(jLabel3))
+                        .addGap(142, 142, 142)
+                        .addComponent(mortalCombatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(startPanelLayout.createSequentialGroup()
                         .addGap(124, 124, 124)
                         .addGroup(startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkResultsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(startPanelLayout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(mortalCombatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(startPanelLayout.createSequentialGroup()
+                                .addGap(241, 241, 241)
+                                .addComponent(jLabel3))
+                            .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(checkResultsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(128, Short.MAX_VALUE))
         );
         startPanelLayout.setVerticalGroup(
@@ -72,13 +73,16 @@ public class startFrame extends javax.swing.JFrame {
             .addGroup(startPanelLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(mortalCombatLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(checkResultsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jLabel3)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGroup(startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(startPanelLayout.createSequentialGroup()
+                        .addGap(178, 178, 178)
+                        .addComponent(jLabel3))
+                    .addGroup(startPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(checkResultsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -96,11 +100,16 @@ public class startFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-    
+        galaFrame gf = new galaFrame();
+        mainIdea m = new mainIdea(1, gf);
+        m.startGame();
+        this.dispose();
+        gf.setLocationRelativeTo(null);
+        gf.setVisible(true);
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void checkResultsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkResultsButtonActionPerformed
-      
+
     }//GEN-LAST:event_checkResultsButtonActionPerformed
 
 

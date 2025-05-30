@@ -16,13 +16,16 @@ public class Player {
         this.maxhealth = health;
         this.baseDamage = damage;
     }
-    
+
     public void addLevel() {
         this.level++;
     }
 
     public void changeHealth(int addHealth) {
-        this.health += addHealth;
+        this.health = Math.min(this.health + addHealth, this.maxhealth);
+        if (this.health < 0) {
+            this.health = 0;
+        }
     }
 
     public void setNewHealth(int newHealth) {

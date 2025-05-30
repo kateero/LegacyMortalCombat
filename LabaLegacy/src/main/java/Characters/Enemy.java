@@ -16,41 +16,12 @@ public class Enemy extends Player {
 
     private BehaviorPattern generateBehaviorPattern() {
         double rand = Math.random() * 100;
-
         switch (this.type) {
-
-            case TANK:
-                if (rand < 30) {
-                    return BehaviorPattern.getRandomAttackDefend();
-                } else if (rand < 90) {
-                    return BehaviorPattern.DEFEND_ATTACK_DEFEND;
-                } else {
-                    return BehaviorPattern.FOUR_ATTACKS;
-                }
-
-            case MAGE:
-                if (rand < 30) {
-                    return BehaviorPattern.getRandomAttackDefend();
-                } else if (rand < 70) {
-                    return BehaviorPattern.MAGE_ATTACKS;
-                } else {
-                    return BehaviorPattern.FOUR_ATTACKS;
-                }
-
-            case FIGHTER:
-                if (rand < 25) {
-                    return BehaviorPattern.getRandomAttackDefend();
-                } else if (rand < 35) {
-                    return BehaviorPattern.DEFEND_ATTACK_DEFEND;
-                } else {
-                    return BehaviorPattern.FOUR_ATTACKS;
-                }
-
-            case SOLDIER:
-                return (rand < 50) ? BehaviorPattern.getRandomAttackDefend() : BehaviorPattern.DEFEND_ATTACK_DEFEND;
-
-            default:
-                return BehaviorPattern.getRandomAttackDefend();
+            case TANK: return getTankPattern(rand);
+            case MAGE: return getMagePattern(rand);
+            case FIGHTER: return getFighterPattern(rand);
+            case SOLDIER: return getSoldierPattern(rand);
+            default: return BehaviorPattern.getRandomAttackDefend();
         }
     }
 
@@ -63,5 +34,43 @@ public class Enemy extends Player {
             patternStep = 0;
         }
         return action;
+    }
+
+    private BehaviorPattern getTankPattern(double rand) {
+        if (rand < 30) {
+            return BehaviorPattern.getRandomAttackDefend();
+        } else if (rand < 90) {
+            return BehaviorPattern.DEFEND_ATTACK_DEFEND;
+        } else {
+            return BehaviorPattern.FOUR_ATTACKS;
+        }
+    }
+
+    private BehaviorPattern getMagePattern(double rand) {
+        if (rand < 30) {
+            return BehaviorPattern.getRandomAttackDefend();
+        } else if (rand < 70) {
+            return BehaviorPattern.MAGE_ATTACKS;
+        } else {
+            return BehaviorPattern.FOUR_ATTACKS;
+        }
+    }
+
+    private BehaviorPattern getFighterPattern(double rand) {
+        if (rand < 25) {
+            return BehaviorPattern.getRandomAttackDefend();
+        } else if (rand < 35) {
+            return BehaviorPattern.DEFEND_ATTACK_DEFEND;
+        } else {
+            return BehaviorPattern.FOUR_ATTACKS;
+        }
+    }
+
+    private BehaviorPattern getSoldierPattern(double rand) {
+        if (rand < 50) {
+            return BehaviorPattern.getRandomAttackDefend();
+        } else {
+            return BehaviorPattern.DEFEND_ATTACK_DEFEND;
+        }
     }
 }

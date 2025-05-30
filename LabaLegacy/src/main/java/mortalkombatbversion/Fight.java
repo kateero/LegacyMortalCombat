@@ -13,7 +13,8 @@ public class Fight {
     private int stunStatus = 0; // 0 - нет оглушения, 1 - игрок оглушен, 2 - враг оглушен
     private int playerWins = 0;
     private int currentLevel = 1;
-    private JLabel logLabel; // Для вывода сообщений
+    private JLabel logLabel;
+    private BattleEndListener battleEndListener;
 
     public Fight(Human player, Enemy enemy, JLabel logLabel) {
         this.player = player;
@@ -121,6 +122,10 @@ public class Fight {
         player.addPoints(calculatePoints());
 
         logLabel.setText(player.getName() + " побеждает! +" + expGain + " опыта");
+        
+        if (battleEndListener != null) {
+            battleEndListener.onBattleEnd(true);
+        }
 
         // Проверка перехода на новый уровень
         if (playerWins >= getWinsForLevel(currentLevel)) {
@@ -132,6 +137,9 @@ public class Fight {
 
     private void handleDefeat() {
         logLabel.setText("Вы проиграли! Игра окончена.");
+        if (battleEndListener != null) {
+            battleEndListener.onBattleEnd(false);
+        }
     }
 
     private int calculateExperience() {
@@ -161,16 +169,28 @@ public class Fight {
         };
     }
 
-    public int getCurrentLevel() {
-        return currentLevel;
-    }
-
     public int getPlayerWins() {
         return playerWins;
     }
 
     public int getWinsForNextLevel() {
         return getWinsForLevel(currentLevel);
+    }
+
+    public Human getPlayer() {
+        return player;
+    }
+
+    public Enemy getEnemy() {
+        return enemy;
+    }
+    
+    public interface BattleEndListener {
+        void onBattleEnd(boolean playerWon);
+    }
+
+    public void setBattleEndListener(BattleEndListener listener) {
+        this.battleEndListener = listener;
     }
 
 }
