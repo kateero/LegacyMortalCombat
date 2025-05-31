@@ -1,6 +1,7 @@
 package GUI;
 
-import mortalkombatbversion.mainIdea;
+import mortalkombatbversion.Game;
+import javax.swing.JOptionPane;
 
 public class startFrame extends javax.swing.JFrame {
 
@@ -100,16 +101,40 @@ public class startFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        galaFrame gf = new galaFrame();
-        mainIdea m = new mainIdea(2, gf);
-        m.startGame();
-        this.dispose();
-        gf.setLocationRelativeTo(null);
-        gf.setVisible(true);
+        String input = JOptionPane.showInputDialog(this, 
+            "Введите количество локаций (от 1 до 10):", 
+            "Количество локаций", 
+            JOptionPane.QUESTION_MESSAGE);
+            
+        if (input != null && !input.trim().isEmpty()) {
+            try {
+                int locationCount = Integer.parseInt(input.trim());
+                if (locationCount >= 1 && locationCount <= 10) {
+                    galaFrame gf = new galaFrame();
+                    Game mainIdea = new Game(locationCount, gf);
+                    mainIdea.startGame();
+                    this.dispose();
+                    gf.setLocationRelativeTo(null);
+                    gf.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                        "Пожалуйста, введите число от 1 до 10",
+                        "Ошибка",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this,
+                    "Пожалуйста, введите корректное число",
+                    "Ошибка",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void checkResultsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkResultsButtonActionPerformed
-
+        recordsDialog dialog = new recordsDialog(this);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }//GEN-LAST:event_checkResultsButtonActionPerformed
 
 

@@ -1,11 +1,16 @@
 package GUI;
 
-import javax.swing.JFrame;
+import mortalkombatbversion.ResultsManager;
+import javax.swing.*;
 
 public class winGameDialog extends javax.swing.JDialog {
+    private ResultsManager resultsManager;
+    private int points;
 
-    public winGameDialog(JFrame parent) {
+    public winGameDialog(JFrame parent, int points) {
         super(parent, true);
+        this.points = points;
+        this.resultsManager = new ResultsManager();
         initComponents();
         setLocationRelativeTo(parent);
     }
@@ -13,32 +18,31 @@ public class winGameDialog extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         jPanel = new javax.swing.JPanel();
         TitleLabel = new javax.swing.JLabel();
         nameValue = new javax.swing.JTextField();
         enterNameLabel = new javax.swing.JLabel();
         endGameButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel.setBackground(new java.awt.Color(255, 204, 255));
 
-        TitleLabel.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        TitleLabel.setFont(new java.awt.Font("Georgia", 1, 24));
         TitleLabel.setForeground(new java.awt.Color(234, 87, 19));
         TitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TitleLabel.setText("Победа на вашей стороне");
 
-        nameValue.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        nameValue.setFont(new java.awt.Font("Georgia", 0, 18));
         nameValue.setForeground(new java.awt.Color(0, 0, 0));
         nameValue.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        enterNameLabel.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        enterNameLabel.setFont(new java.awt.Font("Georgia", 0, 18));
         enterNameLabel.setForeground(new java.awt.Color(51, 51, 51));
         enterNameLabel.setText("Введите имя своего персонажа");
 
         endGameButton.setBackground(new java.awt.Color(234, 87, 19));
-        endGameButton.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        endGameButton.setFont(new java.awt.Font("Georgia", 0, 18));
         endGameButton.setForeground(new java.awt.Color(255, 255, 255));
         endGameButton.setText("Закончить игру");
         endGameButton.addActionListener(new java.awt.event.ActionListener() {
@@ -94,12 +98,16 @@ public class winGameDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void endGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endGameButtonActionPerformed
+    private void endGameButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        String name = nameValue.getText().trim();
+        if (!name.isEmpty()) {
+            resultsManager.addResult(name, points);
+        }
         this.dispose();
         startFrame start = new startFrame();
         start.setLocationRelativeTo(null);
         start.setVisible(true);
-    }//GEN-LAST:event_endGameButtonActionPerformed
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TitleLabel;

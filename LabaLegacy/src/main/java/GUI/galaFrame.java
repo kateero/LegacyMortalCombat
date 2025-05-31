@@ -3,12 +3,23 @@ package GUI;
 import Characters.Action;
 import Characters.Enemy;
 import Characters.Human;
+import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import mortalkombatbversion.Fight;
+import mortalkombatbversion.Game;
 
+/**
+ * Основное окно игры, отображающее бой между игроком и противником.
+ * Содержит элементы управления для выбора действий, отображения
+ * характеристик персонажей и статуса боя.
+ * 
+ * @author kateero
+ * @version 1.0
+ */
 public class galaFrame extends javax.swing.JFrame {
 
     private boolean isPlayerMove = true;
@@ -16,26 +27,46 @@ public class galaFrame extends javax.swing.JFrame {
     private Human human;
     private Enemy enemy;
 
+    /**
+     * Создает новое главное окно игры.
+     */
     public galaFrame() {
         initComponents();
     }
 
+    /**
+     * @return кнопка атаки
+     */
     public JButton getAttackButton() {
         return attackButton;
     }
 
+    /**
+     * @return кнопка защиты
+     */
     public JButton getDefendButton() {
         return defendButton;
     }
 
+    /**
+     * @return кнопка ослабления
+     */
     public JButton getWeakButton() {
         return weakButton;
     }
 
+    /**
+     * @return метка для отображения игровых сообщений
+     */
     public JLabel getLabelMoves() {
         return labelMoves;
     }
 
+    /**
+     * Устанавливает текущий бой и связанных с ним персонажей.
+     * 
+     * @param fight объект текущего боя
+     */
     public void setFight(Fight fight) {
         this.fight = fight;
         this.human = fight.getPlayer();
@@ -211,14 +242,13 @@ public class galaFrame extends javax.swing.JFrame {
                 .addGroup(jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jpanelLayout.createSequentialGroup()
                         .addGroup(jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(humanNameValue, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(66, 66, 66))
+                            .addGroup(jpanelLayout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addComponent(humanNameValue, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jpanelLayout.createSequentialGroup()
                                 .addGap(46, 46, 46)
-                                .addComponent(humanImage, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)))
+                                .addComponent(humanImage, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpanelLayout.createSequentialGroup()
                                 .addGroup(jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,15 +260,17 @@ public class galaFrame extends javax.swing.JFrame {
                             .addComponent(labelMoves, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpanelLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(enemyImage, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jpanelLayout.createSequentialGroup()
-                                    .addGap(57, 57, 57)
-                                    .addComponent(enemyTypeValye, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jpanelLayout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
-                                    .addComponent(enemyLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
+                                .addComponent(enemyLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jpanelLayout.createSequentialGroup()
+                                .addGroup(jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpanelLayout.createSequentialGroup()
+                                        .addGap(57, 57, 57)
+                                        .addComponent(enemyTypeValye, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jpanelLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(enemyImage, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jpanelLayout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(attackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -285,7 +317,7 @@ public class galaFrame extends javax.swing.JFrame {
                                 .addComponent(humanDamageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(enemyDamageValue, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jpanelLayout.setVerticalGroup(
             jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,15 +357,15 @@ public class galaFrame extends javax.swing.JFrame {
                 .addGroup(jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jpanelLayout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addGroup(jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jpanelLayout.createSequentialGroup()
                                 .addComponent(humanImage, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(humanNameValue, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(6, 6, 6))
                             .addGroup(jpanelLayout.createSequentialGroup()
-                                .addComponent(enemyImage, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(enemyImage, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(enemyTypeValye, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(33, 33, 33)
                         .addGroup(jpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -387,7 +419,8 @@ public class galaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_defendButtonActionPerformed
 
     private void objectsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objectsButtonActionPerformed
-       //ObjectsDialog
+        ObjectsDialog dialog = new ObjectsDialog(this, human);
+        dialog.setVisible(true);
     }//GEN-LAST:event_objectsButtonActionPerformed
 
     private void weakButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_weakButtonActionPerformed
@@ -401,6 +434,44 @@ public class galaFrame extends javax.swing.JFrame {
         refreshAfterHit();
     }//GEN-LAST:event_weakButtonActionPerformed
 
+    /**
+     * Обновляет отображение после выполнения действия.
+     * Обновляет полоски здоровья, значения урона, опыта и очков.
+     */
+    public void refreshAfterHit(){
+        humanProgressBar.setValue(human.getHealth());
+        enemyProgressBar.setValue(enemy.getHealth());
+        humanHealthValue.setText(human.getHealth() + "/" + human.getMaxHealth());
+        enemyHealthValue.setText(enemy.getHealth() + "/" + enemy.getMaxHealth());
+        humanDamageValue.setText(String.valueOf(human.getDamage()));
+        enemyDamageValue.setText(String.valueOf(enemy.getDamage()));
+        experienceValue.setText(human.getExperience() + "/" + human.getNextExperience());
+        pointsValue.setText(String.valueOf(human.getPoints()));
+        updateDebuffColors();
+    }
+
+    /**
+     * Обновляет цвета имен персонажей в зависимости от наличия эффекта ослабления.
+     */
+    private void updateDebuffColors() {
+        if (human.isWeakened()) {
+            humanNameValue.setForeground(Color.RED);
+        } else {
+            humanNameValue.setForeground(Color.BLACK); 
+        }
+
+        if (enemy.isWeakened()) {
+            enemyTypeValye.setForeground(Color.RED); 
+        } else {
+            enemyTypeValye.setForeground(Color.BLACK);
+        }
+    }
+
+    /**
+     * Инициализирует начальное состояние окна.
+     * Устанавливает значения всех отображаемых элементов
+     * в соответствии с текущими характеристиками персонажей.
+     */
     public void initilaize(){
         pointsValue.setText(String.valueOf(human.getPoints()));
         experienceValue.setText(human.getExperience() + "/" 
@@ -411,10 +482,11 @@ public class galaFrame extends javax.swing.JFrame {
         humanProgressBar.setValue(human.getHealth());
         humanHealthValue.setText(human.getHealth() + "/" + human.getMaxHealth());
         
-        ImageIcon icon = new ImageIcon("C:\\Users\\Катя\\Downloads\\Kitana.jpg");
-        Image scaledKitana = icon.getImage().getScaledInstance(210, 255, Image.SCALE_SMOOTH);
-        icon = new ImageIcon(scaledKitana);
-        humanImage.setIcon(icon);
+        ImageIcon iconHuman = new ImageIcon(human.getImage().getScaledInstance(212, 255, Image.SCALE_SMOOTH));
+        humanImage.setIcon(iconHuman);
+        
+        ImageIcon iconEnemy = new ImageIcon(enemy.getImage().getScaledInstance(212, 255, Image.SCALE_SMOOTH));
+        enemyImage.setIcon(iconEnemy);
         
         enemyTypeValye.setText(enemy.getName());
         enemyLevelLabel.setText(enemy.getLevel() + " уровень");
@@ -423,15 +495,38 @@ public class galaFrame extends javax.swing.JFrame {
         enemyProgressBar.setMaximum(enemy.getMaxHealth());
         enemyProgressBar.setValue(enemy.getHealth());
     }
-    
-    public void refreshAfterHit(){
-        humanProgressBar.setValue(human.getHealth());
-        humanHealthValue.setText(human.getHealth() + "/" + human.getMaxHealth());
-        humanDamageValue.setText(String.valueOf(human.getDamage()));
-        
-        enemyProgressBar.setValue(enemy.getHealth());
-        enemyHealthValue.setText(enemy.getHealth() + "/" + enemy.getMaxHealth());
-        enemyDamageValue.setText(String.valueOf(enemy.getDamage()));
+
+    /**
+     * Обработчик нажатия кнопки старта игры.
+     * Запрашивает у пользователя количество локаций
+     * и запускает новую игру.
+     */
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        String input = JOptionPane.showInputDialog(this, 
+            "Введите количество локаций (от 1 до 10):", 
+            "Количество локаций", 
+            JOptionPane.QUESTION_MESSAGE);
+            
+        if (input != null && !input.trim().isEmpty()) {
+            try {
+                int locationCount = Integer.parseInt(input.trim());
+                if (locationCount >= 1 && locationCount <= 10) {
+                    Game mainIdea = new Game(locationCount, this);
+                    mainIdea.startGame();
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                        "Пожалуйста, введите число от 1 до 10",
+                        "Ошибка",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this,
+                    "Пожалуйста, введите корректное число",
+                    "Ошибка",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

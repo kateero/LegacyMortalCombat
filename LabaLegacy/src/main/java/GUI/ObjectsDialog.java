@@ -1,9 +1,17 @@
 package GUI;
 
-public class ObjectsDialog extends javax.swing.JDialog {
+import Characters.Human;
+import javax.swing.JFrame;
 
-    public ObjectsDialog() {
+public class ObjectsDialog extends javax.swing.JDialog {
+    private Human human;
+
+    public ObjectsDialog(JFrame parent, Human human) {
+        super(parent, true);
+        this.human = human;
         initComponents();
+        setLocationRelativeTo(parent);
+        // TODO: Обновить количество предметов в инвентаре
     }
     
     @SuppressWarnings("unchecked")
@@ -16,8 +24,6 @@ public class ObjectsDialog extends javax.swing.JDialog {
         bigPoisonRB = new javax.swing.JRadioButton();
         rebirthRB = new javax.swing.JRadioButton();
         useButton = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel.setBackground(new java.awt.Color(240, 232, 182));
 
@@ -119,7 +125,7 @@ public class ObjectsDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_bigPoisonRBActionPerformed
 
     private void useButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useButtonActionPerformed
-
+        this.dispose();
     }//GEN-LAST:event_useButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

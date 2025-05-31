@@ -1,94 +1,180 @@
 package mortalkombatbversion;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import Characters.Enemy;
+import Characters.EnemyFabric;
+import Characters.EnemyType;
+import Characters.Human;
+import GUI.galaFrame;
+import GUI.loseDialog;
+import GUI.chooseImproveDialog;
+import GUI.whoWinDialog;
+import GUI.winGameDialog;
 import java.util.ArrayList;
-import java.util.Comparator;
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-import Characters.Player;
-import mortalkombatbversion.Result;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.util.Random;
+import javax.swing.SwingUtilities;
 
 /**
- *
- * @author Мария
+ * Основной класс, управляющий игровым процессом.
+ * Отвечает за создание и управление локациями, противниками,
+ * и общим состоянием игры.
+ * 
+ * @author kateero
+ * @version 1.0
  */
 public class Game {
 
- /*   CharacterAction action = new CharacterAction();
-    ChangeTexts change = new ChangeTexts();
-    Fight fight = new Fight();
-    private ArrayList<Result> results = new ArrayList<>();
+    private int locationQuantity;
+    private int currentLocation;
+    private Human human;
+    private EnemyFabric enemyFabric;
+    private ArrayList<Enemy> currentEnemies;
+    private Random random;
+    private boolean gameOver;
+    private galaFrame galaFrame;
+    private int currentEnemyIndex;
 
-    public Player NewEnemy(JLabel L1, JLabel L2,
-            JLabel L3, JLabel L4, JProgressBar pr2) {
-        action.setEnemyes();
-        Player enemy = action.ChooseEnemy(L1, L2, L3, L4);
-        action.HP(enemy, pr2);
-        pr2.setMaximum(enemy.getMaxHealth());
-        return enemy;
-    }
-    
-    public Human NewHuman(JProgressBar pr1){
-        Human human = new Human (0,80,16,1);
-        action.HP(human, pr1);
-        pr1.setMaximum(human.getMaxHealth());
-        return human;
+    /**
+     * Создает новую игру с указанным количеством локаций.
+     * 
+     * @param quantityLocation количество локаций в игре
+     * @param galaFrame главное окно игры
+     */
+    public Game(int quantityLocation, galaFrame galaFrame) {
+        this.locationQuantity = quantityLocation;
+        this.human = new Human();
+        this.enemyFabric = new EnemyFabric();
+        this.random = new Random();
+        this.gameOver = false;
+        this.galaFrame = galaFrame;
+        this.currentEnemies = new ArrayList<>();
+        this.currentEnemyIndex = 0;
     }
 
-    public void EndGameTop(Human human, JTextField text, JTable table) throws IOException {
-        results.add(new Result(text.getText(), human.getPoints()));
-        results.sort(Comparator.comparing(Result::getPoints).reversed());
-        WriteToTable(table);
-        WriteToExcel();
+    /**
+     * Запускает игру, инициализируя начальное состояние
+     * и переходя к первой локации.
+     */
+    public void startGame() {
+        resetGameState();
+        playNextLocation();
     }
-    
-    public void WriteToExcel() throws IOException{
-        XSSFWorkbook book = new XSSFWorkbook();
-        XSSFSheet sheet = book.createSheet("Результаты ТОП 10");
-        XSSFRow r = sheet.createRow(0);
-        r.createCell(0).setCellValue("№");
-        r.createCell(1).setCellValue("Имя");
-        r.createCell(2).setCellValue("Количество баллов");
-        for (int i=0; i<results.size();i++){
-            if (i<10){
-                XSSFRow r2 = sheet.createRow(i+1);
-                r2.createCell(0).setCellValue(i+1);
-                r2.createCell(1).setCellValue(results.get(i).getName());
-                r2.createCell(2).setCellValue(results.get(i).getPoints());
+
+    /**
+     * Сбрасывает состояние игры к начальным значениям.
+     */
+    private void resetGameState() {
+        currentLocation = 0;
+        gameOver = false;
+        currentEnemyIndex = 0;
+        currentEnemies.clear();
+        human = new Human();
+    }
+
+    /**
+     * Инициализирует следующую локацию, создавая новых противников
+     * и запуская следующий бой.
+     */
+    private void playNextLocation() {
+        if (currentLocation >= locationQuantity || gameOver) {
+            endGame();
+            return;
+        }
+
+        int enemiesCount = 1 + random.nextInt(3) + human.getLevel();
+        currentEnemies = generateEnemies(enemiesCount);
+        currentEnemies.add(enemyFabric.createEnemy(EnemyType.BOSS, human.getLevel() + 1, human));
+        currentEnemyIndex = 0;
+
+        startNextFight();
+    }
+
+    /**
+     * Начинает следующий бой с текущим противником.
+     * Если все противники в локации побеждены, переходит к следующей локации.
+     */
+    private void startNextFight() {
+        if (currentEnemyIndex >= currentEnemies.size()) {
+            currentLocation++;
+            if (currentLocation >= locationQuantity) {
+                endGame();
+                return;
             }
+            human.levelUp();
+            SwingUtilities.invokeLater(() -> {
+                chooseImproveDialog improveDialog = new chooseImproveDialog(galaFrame, human);
+                improveDialog.setVisible(true);
+            });
+            playNextLocation();
+            return;
         }
-        File f = new File("C:\\Users\\Мария\\Desktop\\Results.xlsx");
-        book.write(new FileOutputStream(f));
-        book.close();
-    }
-    
-    public ArrayList<Result> getResults(){
-        return this.results;
+
+        Enemy currentEnemy = currentEnemies.get(currentEnemyIndex);
+        Fight fight = new Fight(human, currentEnemy, galaFrame.getLabelMoves());
+        galaFrame.setFight(fight);
+        galaFrame.initilaize();
+
+        fight.setBattleEndListener(new Fight.BattleEndListener() {
+            @Override
+            public void onBattleEnd(boolean playerWon) {
+                if (playerWon) {
+                    currentEnemyIndex++;
+                    SwingUtilities.invokeLater(() -> {
+                        whoWinDialog winDialog = new whoWinDialog(galaFrame);
+                        winDialog.setVisible(true);
+                        if (currentEnemyIndex < currentEnemies.size()) {
+                            startNextFight();
+                        } else {
+                            currentLocation++;
+                            if (currentLocation >= locationQuantity) {
+                                endGame();
+                            } else {
+                                human.levelUp();
+                                chooseImproveDialog improveDialog = new chooseImproveDialog(galaFrame, human);
+                                improveDialog.setVisible(true);
+                                playNextLocation();
+                            }
+                        }
+                    });
+                } else {
+                    gameOver = true;
+                    SwingUtilities.invokeLater(() -> {
+                        loseDialog dialog = new loseDialog(galaFrame);
+                        galaFrame.setVisible(false);
+                        dialog.setVisible(true);
+                        resetGameState(); 
+                    });
+                }
+            }
+        });
     }
 
-    public void ReadFromExcel() throws IOException{
-        XSSFWorkbook book = new XSSFWorkbook("C:\\Users\\Катя\\OneDrive\\Рабочий стол\\result.xlsx");
-        XSSFSheet sh = book.getSheetAt(0);
-        for (int i=1; i<=sh.getLastRowNum();i++) {
-            results.add(new Result(sh.getRow(i).getCell(1).getStringCellValue(),(int)sh.getRow(i).getCell(2).getNumericCellValue()));
+    /**
+     * Генерирует список противников для текущей локации.
+     * 
+     * @param count количество противников для генерации
+     * @return список сгенерированных противников
+     */
+    private ArrayList<Enemy> generateEnemies(int count) {
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            EnemyType type = EnemyType.values()[random.nextInt(EnemyType.values().length - 1)];
+            int enemyLevel = Math.max(1, human.getLevel() + 1);
+            enemies.add(enemyFabric.createEnemy(type, enemyLevel, human));
+        }
+        return enemies;
+    }
+
+    /**
+     * Завершает игру, показывая соответствующий диалог
+     * 
+     */
+    private void endGame() {
+        if (!gameOver) {
+            SwingUtilities.invokeLater(() -> {
+                galaFrame.setVisible(false);
+                winGameDialog dialog = new winGameDialog(galaFrame, human.getPoints());
+                dialog.setVisible(true);
+            });
         }
     }
-    
-    public void WriteToTable(JTable table){
-        DefaultTableModel model = (DefaultTableModel)table.getModel();
-        for (int i=0; i<results.size();i++){
-            if (i<10){
-                model.setValueAt(results.get(i).getName(), i, 0);
-                model.setValueAt(results.get(i).getPoints(), i, 1);
-            }
-        }
-    }*/
 }

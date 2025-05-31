@@ -1,15 +1,14 @@
 package GUI;
 
 import Characters.Human;
-import javax.swing.JFrame;
 
 public class chooseImproveDialog extends javax.swing.JFrame {
+
     private Human human;
     private galaFrame mainFrame;
     private static final String[] IMPROVEMENTS = {
         "Здоровье (+10)",
-        "Урон (+5)",
-    };
+        "Урон (+5)",};
 
     public chooseImproveDialog(galaFrame parent, Human human) {
         initComponents();
@@ -17,12 +16,6 @@ public class chooseImproveDialog extends javax.swing.JFrame {
         this.mainFrame = parent;
         setLocationRelativeTo(parent);
         improveComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(IMPROVEMENTS));
-        
-        okButton.addActionListener(evt -> {
-            applyImprovement(improveComboBox.getSelectedIndex());
-            mainFrame.refreshAfterHit();
-            this.dispose();
-        });
     }
 
     private void applyImprovement(int selectedIndex) {
@@ -64,6 +57,11 @@ public class chooseImproveDialog extends javax.swing.JFrame {
         okButton.setBackground(new java.awt.Color(231, 198, 255));
         okButton.setFont(new java.awt.Font("Georgia", 0, 16)); // NOI18N
         okButton.setText("OK");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -114,6 +112,12 @@ public class chooseImproveDialog extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        applyImprovement(improveComboBox.getSelectedIndex());
+        mainFrame.refreshAfterHit();
+        this.dispose();
+    }//GEN-LAST:event_okButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> improveComboBox;

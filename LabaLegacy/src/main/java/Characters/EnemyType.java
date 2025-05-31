@@ -1,5 +1,5 @@
 package Characters;
 
 public enum EnemyType {
-     TANK, MAGE, FIGHTER, SOLDIER
+     TANK, MAGE, FIGHTER, SOLDIER, BOSS
 }

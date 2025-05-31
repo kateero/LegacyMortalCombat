@@ -5,7 +5,16 @@ import Characters.Action;
 import Characters.Enemy;
 import Characters.Human;
 import Characters.Player;
+import Characters.ShaoKahn;
 
+/**
+ * Класс, управляющий боевой системой игры.
+ * Обрабатывает взаимодействие между игроком и противником,
+ * включая атаки, защиту и специальные способности.
+ * 
+ * @author kateero
+ * @version 1.0
+ */
 public class Fight {
 
     private Human player;
@@ -16,14 +25,27 @@ public class Fight {
     private JLabel logLabel;
     private BattleEndListener battleEndListener;
 
+    /**
+     * Создает новый экземпляр боя между игроком и противником.
+     * 
+     * @param player игрок (персонаж, управляемый пользователем)
+     * @param enemy противник (управляемый компьютером)
+     * @param logLabel метка для отображения игровых сообщений
+     */
     public Fight(Human player, Enemy enemy, JLabel logLabel) {
         this.player = player;
         this.enemy = enemy;
         this.logLabel = logLabel;
     }
 
+    /**
+     * Обрабатывает ход игрока.
+     * Проверяет статус оглушения, применяет выбранное действие
+     * и проверяет условия победы/поражения.
+     * 
+     * @param playerAction действие, выбранное игроком
+     */
     public void playerMove(Action playerAction) {
-
         // Ход игрока
         if (stunStatus == 1) {
             logLabel.setText(player.getName() + " оглушен и пропускает ход!");
@@ -41,6 +63,12 @@ public class Fight {
         }
     }
 
+    /**
+     * Обрабатывает ход компьютера.
+     * Применяет действие противника и обновляет состояние боя.
+     * 
+     * @param playerReaction действие, выбранное игроком
+     */
     public void computerMove(Action playerReaction) {
         //Ход компьютера
         if (enemy.getHealth() > 0) {
@@ -50,6 +78,32 @@ public class Fight {
             } else {
                 enemy.updateDebuff();
                 Action enemyAction = enemy.getNextAction();
+              
+                if (enemy instanceof ShaoKahn) {
+                    ShaoKahn boss = (ShaoKahn) enemy;
+                    
+                    if (enemyAction == Action.REGENERATE) {
+                        if (playerReaction == Action.DEFEND) {
+                            int regenAmount = boss.getRegenerationAmount();
+                            boss.changeHealth(regenAmount);
+                            logLabel.setText("Босс восстановил " + regenAmount + " здоровья!");
+                            return;
+                        } else if (playerReaction == Action.ATTACK) {
+                            int damage = player.getDamage() * 2;
+                            boss.changeHealth(-damage);
+                            logLabel.setText("Босс получил двойной урон: " + damage + "!");
+                            return;
+                        }
+                    }
+                    
+                    if (enemyAction == Action.ATTACK && playerReaction == Action.DEFEND && boss.shouldBreakBlock()) {
+                        int damage = (int)(boss.getDamage() * 0.5);
+                        player.changeHealth(-damage);
+                        logLabel.setText("Босс пробил блок! Нанесено " + damage + " урона!");
+                        return;
+                    }
+                }
+                
                 resolveActions(enemyAction, playerReaction, false);
             }
         }
@@ -61,6 +115,13 @@ public class Fight {
         }
     }
 
+    /**
+     * Разрешает взаимодействие между действиями игрока и противника.
+     * 
+     * @param initiatorAction действие первого участника
+     * @param responderAction действие второго участника
+     * @param isPlayerInitiator true если первое действие от игрока, false если от противника
+     */
     private void resolveActions(Action initiatorAction, Action responderAction, boolean isPlayerInitiator) {
         Player initiator;
         Player responder;
@@ -115,11 +176,26 @@ public class Fight {
         }
     }
 
+    /**
+     * Обрабатывает победу игрока.
+     * Начисляет опыт, очки и вызывает соответствующий callback.
+     */
     private void handleVictory() {
         playerWins++;
         int expGain = calculateExperience();
+        
+        if (enemy instanceof ShaoKahn) {
+            expGain *= 2;
+        }
+        
         player.addExperience(expGain);
-        player.addPoints(calculatePoints());
+        int points = calculatePoints();
+        
+        if (enemy instanceof ShaoKahn) {
+            points *= 2; 
+        }
+        
+        player.addPoints(points);
         
         if (battleEndListener != null) {
             battleEndListener.onBattleEnd(true);
@@ -132,6 +208,10 @@ public class Fight {
         }
     }
 
+    /**
+     * Обрабатывает поражение игрока.
+     * Вызывает соответствующий callback для завершения боя.
+     */
     private void handleDefeat() {
         if (battleEndListener != null) {
             battleEndListener.onBattleEnd(false);
@@ -148,18 +228,12 @@ public class Fight {
 
     private int getWinsForLevel(int level) {
         return switch (level) {
-            case 1 ->
-                2;
-            case 2 ->
-                4;
-            case 3 ->
-                7;
-            case 4 ->
-                9;
-            case 5 ->
-                12;
-            default ->
-                15;
+            case 1 -> 2;
+            case 2 -> 4;
+            case 3 -> 7;
+            case 4 -> 9;
+            case 5 -> 12;
+            default -> 15;
         };
     }
 
@@ -171,20 +245,42 @@ public class Fight {
         return getWinsForLevel(currentLevel);
     }
 
+    /**
+     * Возвращает текущего игрока.
+     * 
+     * @return объект игрока
+     */
     public Human getPlayer() {
         return player;
     }
 
+    /**
+     * Возвращает текущего противника.
+     * 
+     * @return объект противника
+     */
     public Enemy getEnemy() {
         return enemy;
     }
     
-    public interface BattleEndListener {
-        void onBattleEnd(boolean playerWon);
-    }
-
+    /**
+     * Устанавливает слушателя для событий окончания боя.
+     * 
+     * @param listener объект, реализующий интерфейс BattleEndListener
+     */
     public void setBattleEndListener(BattleEndListener listener) {
         this.battleEndListener = listener;
     }
 
+    /**
+     * Интерфейс для обработки событий окончания боя.
+     */
+    public interface BattleEndListener {
+        /**
+         * Вызывается при завершении боя.
+         * 
+         * @param playerWon true если победил игрок, false если победил противник
+         */
+        void onBattleEnd(boolean playerWon);
+    }
 }

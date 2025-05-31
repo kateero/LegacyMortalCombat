@@ -6,10 +6,10 @@ public class Enemy extends Player {
     private BehaviorPattern currentPattern;
     private int patternStep = 0;
 
-    public Enemy(int level, int health, int damage, EnemyType type) {
+    public Enemy(int level, int health, int damage, EnemyType type, String filePath) {
         super(level,
                 (int) (health * (1 + 0.3 * (level - 1))),
-                (int) (damage * (1 + 0.2 * (level - 1))));
+                (int) (damage * (1 + 0.2 * (level - 1))), filePath);
         this.type = type;
         this.currentPattern = this.generateBehaviorPattern();
     }
@@ -72,5 +72,9 @@ public class Enemy extends Player {
         } else {
             return BehaviorPattern.DEFEND_ATTACK_DEFEND;
         }
+    }
+
+    public void setWeakened(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 }

@@ -1,36 +1,52 @@
 package GUI;
 
-public class recordsDialog extends javax.swing.JDialog {
+import mortalkombatbversion.ResultsManager;
+import javax.swing.*;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
-    public recordsDialog() {
+public class recordsDialog extends javax.swing.JDialog {
+    private ResultsManager resultsManager;
+    
+    public recordsDialog(JFrame parent) {
+        super(parent, true);
+        resultsManager = new ResultsManager();
         initComponents();
+        loadResults();
+        setLocationRelativeTo(parent);
+    }
+
+    private void loadResults() {
+        List<ResultsManager.GameResult> results = resultsManager.getTopResults(10);
+        DefaultTableModel model = (DefaultTableModel) recordTable.getModel();
+        model.setRowCount(0); // Очищаем таблицу
+        
+        for (ResultsManager.GameResult result : results) {
+            model.addRow(new Object[]{result.getPlayerName(), result.getPoints()});
+        }
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         jPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         recordTable = new javax.swing.JTable();
         closeButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel.setBackground(new java.awt.Color(231, 198, 255));
 
-        titleLabel.setFont(new java.awt.Font("Georgia", 0, 24)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("Georgia", 0, 24));
         titleLabel.setForeground(new java.awt.Color(0, 0, 0));
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLabel.setText("Таблица рекордов");
 
-        recordTable.setFont(new java.awt.Font("Georgia", 0, 14)); // NOI18N
+        recordTable.setFont(new java.awt.Font("Georgia", 0, 14));
         recordTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-            },
+            new Object [][] {},
             new String [] {
                 "Имя", "Количество баллов"
             }
@@ -38,15 +54,22 @@ public class recordsDialog extends javax.swing.JDialog {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.Integer.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(recordTable);
 
         closeButton.setBackground(new java.awt.Color(255, 217, 0));
-        closeButton.setFont(new java.awt.Font("Georgia", 0, 18)); // NOI18N
+        closeButton.setFont(new java.awt.Font("Georgia", 0, 18));
         closeButton.setForeground(new java.awt.Color(51, 51, 51));
         closeButton.setText("Закрыть");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -89,9 +112,7 @@ public class recordsDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,9 +122,9 @@ public class recordsDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {
         this.dispose();
-    }//GEN-LAST:event_closeButtonActionPerformed
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
